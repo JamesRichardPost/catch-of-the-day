@@ -311,7 +311,7 @@ header.top h3:after {
   background: #fff;
   transition: all 0.3s;
   box-shadow: 0 5px 5px rgba(0,0,0,0.1);
-  overflow-y: scroll;
+  overflow: scroll;
 }
 .catch-of-the-day > *:first-child {
   flex-shrink: 1;
