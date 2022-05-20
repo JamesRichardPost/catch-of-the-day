@@ -107,7 +107,7 @@ class App extends React.Component {
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
-                    <Header tagline="does this work"/>
+                    <Header tagline={this.props.match.params.storeId}/>
                     <ul className='fishes'>
                         {Object.keys(this.state.fishes).map(key => 
                         <Fish 
