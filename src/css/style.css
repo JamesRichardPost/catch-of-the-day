@@ -91,7 +91,7 @@ a:hover {
   outline: 0;
 }
 h1 {
-  font-size: 2em;
+  font-size: 1em;
 }
 abbr[title] {
   border-bottom: 1px dotted;
@@ -282,7 +282,7 @@ header.top {
   text-align: center;
 }
 header.top h1 {
-  font-size: 14.4rem;
+  font-size: 12.4rem;
   line-height: 0.7;
   display: flex;
   justify-content: center;
@@ -386,7 +386,7 @@ header.top h3:after {
   }
 
   .mobileConcerns {
-    width: 100vw;
+    width: 90vw;
   }
 
   .menu { 
