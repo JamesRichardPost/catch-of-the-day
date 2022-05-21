@@ -59,34 +59,49 @@ class Inventory extends React.Component {
         await app.auth().signOut();
         this.setState({ uid: null });
     }
+    
+    sleep = (miliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, miliseconds));
+    }
 
     render() {
+        const menu = document.querySelector(".menu");
+        const order = document.querySelector(".order-wrap");
+        let inventoryClass;
+        if (menu !== null && order !== null)
+        {
+            const hiddenMenu = menu.classList.contains("hidden");
+            const hiddenOrder = order.classList.contains("hidden");
+            inventoryClass = hiddenMenu && hiddenOrder ? "inventory" : "inventory hidden";
+        }
+        else
+        {
+            inventoryClass = "inventory";
+        }  
+
         const logout = <button onClick={this.logout}>Log Out</button>;
         //const inventoryClass = this.props.matches ? 'inventory' : 'inventory hidden'; 
-
+        console.log(inventoryClass);
         // check if the user is logged in alredy
         if (!this.state.uid)
         {
-            return <Login authenticate={this.authenticate}></Login>;
+            return <Login classes={inventoryClass} authenticate={this.authenticate}></Login>;
         }
         
         // check if they are the owner of the store
         if (this.state.uid !== this.state.owner) {
             return (
-            <div>
+            <div className={inventoryClass}>
                 <p class="inventory">Sorry, you are not the owner.</p>
                 {logout}
             </div>
             );
         }
 
-        const hiddenMenu = document.querySelector(".menu").classList.contains("hidden");
-        const hiddenOrder = document.querySelector(".order-wrap").classList.contains("hidden");
-        const menuClass = hiddenMenu && hiddenOrder ? "inventory" : "inventory hidden";
-
+        
         // they must be the owner!
         return (
-            <div className={menuClass}>
+            <div className={inventoryClass}>
                 <h2>Inventory</h2>
                 {logout}
                 {Object.keys(this.props.fishes).map(key => 
