@@ -7,6 +7,8 @@ import EditFishForm from './EditFishForm';
 import Login from './Login';
 
 class Inventory extends React.Component {
+    newLogin = false;
+    
     static propType = {
         updateFish: PropType.func,
         deleteFish: PropType.func,
@@ -18,7 +20,8 @@ class Inventory extends React.Component {
 
     state = {
         uid: null,
-        owner: null
+        owner: null,
+        newLogin: false
     }
 
     componentDidMount() {
@@ -42,8 +45,9 @@ class Inventory extends React.Component {
         // set the state of the inventory component to reflect current user
         this.setState ({
             uid: authData.user.uid,
-            owner: store.owner || authData.user.uid
+            owner: store.owner || authData.user.uid,
         })
+        
     } 
 
     authenticate = (provider) => {
@@ -58,6 +62,7 @@ class Inventory extends React.Component {
 
     render() {
         const logout = <button onClick={this.logout}>Log Out</button>;
+        //const inventoryClass = this.props.matches ? 'inventory' : 'inventory hidden'; 
 
         // check if the user is logged in alredy
         if (!this.state.uid)
@@ -69,15 +74,19 @@ class Inventory extends React.Component {
         if (this.state.uid !== this.state.owner) {
             return (
             <div>
-                <p>Sorry, you are not the owner.</p>
+                <p class="inventory">Sorry, you are not the owner.</p>
                 {logout}
             </div>
             );
         }
 
+        const hiddenMenu = document.querySelector(".menu").classList.contains("hidden");
+        const hiddenOrder = document.querySelector(".order-wrap").classList.contains("hidden");
+        const menuClass = hiddenMenu && hiddenOrder ? "inventory" : "inventory hidden";
+
         // they must be the owner!
         return (
-            <div className='inventory'>
+            <div className={menuClass}>
                 <h2>Inventory</h2>
                 {logout}
                 {Object.keys(this.props.fishes).map(key => 

@@ -5,6 +5,24 @@ export function formatPrice(cents) {
   });
 }
 
+export function fixNav() {
+const nav = document.querySelector('.navbar');
+const topOfNav = nav.offsetTop;
+console.log('were');
+
+    if (topOfNav <= window.scrollY)
+    {
+      document.body.style.paddingTop = nav.offsetHeight +'px';
+      document.body.classList.add('fixed-nav');
+    }
+    else
+    {
+      document.body.style.paddingTop = 0;
+      document.body.classList.remove('fixed-nav');
+    }
+}
+
+
 export function rando(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -61,9 +79,6 @@ export function getFunName() {
   ];
 
   const nouns = [
-    "women",
-    "men",
-    "children",
     "teeth",
     "feet",
     "people",
@@ -72,7 +87,6 @@ export function getFunName() {
     "geese",
     "halves",
     "knives",
-    "wives",
     "lives",
     "elves",
     "loaves",

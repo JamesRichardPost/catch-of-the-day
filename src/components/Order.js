@@ -52,6 +52,7 @@ class Order extends React.Component {
     
     render() {
         const orderIds = Object.keys(this.props.order);
+        const orderClass = this.props.matches ? 'order-wrap' : 'order-wrap hidden';
         const total = orderIds.reduce((prevTotal, key) => {
             const fish = this.props.fishes[key];
             const count = this.props.order[key];
@@ -65,7 +66,7 @@ class Order extends React.Component {
         }, 0);
 
         return (
-            <div className='order-wrap'>
+            <div className={orderClass}>
                 <h2>
                     Order
                 </h2>

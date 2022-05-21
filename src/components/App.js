@@ -5,12 +5,15 @@ import Inventory from "./Inventory";
 import Order from "./Order";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
+import Navbar from './Navbar';
 import base from "../base";
+import { fixNav } from '../helpers';
 
 class App extends React.Component {
     state = {
         fishes: {},
-        order: {}
+        order: {},
+        matches: window.matchMedia("(min-width: 768px)").matches
     };
 
     static propTypes = {
@@ -18,6 +21,10 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+
+        const handler = e => this.setState({matches: e.matches});
+        window.matchMedia("(min-width: 768px)").addEventListener('change', handler);
+
         const params = this.props.match.params;
         // first reinstate local storage
         const localStorageRef = JSON.parse(localStorage.getItem(params.storeId));
@@ -30,6 +37,12 @@ class App extends React.Component {
             context: this,
             state: "fishes"
         });
+
+        if(!this.state.matches)
+        {
+            console.log(this.state.matches);
+            this.hideInventory();
+        }
     }
 
     componentDidUpdate() {
@@ -103,25 +116,67 @@ class App extends React.Component {
         })
     }
 
-    render() {
-        return (
-            <div className="catch-of-the-day">
-                <div className="menu">
-                    <Header tagline={this.props.match.params.storeId}/>
-                    <ul className='fishes'>
+    changeView = (input) => {
+        console.log(input);
+        // show the one we press
+        const displayPart = document.querySelector("." + input);
+        displayPart.classList.remove("hidden");
+        // hide the others
+        // These are our mobile pages for now, add here if you add more in the future
+        const pages = ["menu", "order-wrap", "inventory"];
+        pages.forEach(page => {
+            if (page !== input)
+            {
+                const hidePart = document.querySelector("." + page);
+                hidePart.classList.add("hidden");
+            }
+        });
+    }
+
+    fishCheck = () => {
+        const isEmpty = Object.keys(this.state.fishes).length === 0;
+        if (isEmpty)
+        {
+          return (<ul>There aren't any fish in the store yet. Check the inventory page to get started!</ul>)
+        }
+
+        else {
+            return (
+                <ul className='fishes'>
                         {Object.keys(this.state.fishes).map(key => 
                         <Fish 
                         key={key} 
                         index={key}
                         details={this.state.fishes[key]} 
                         addToOrder={this.addToOrder}/>)}
-                    </ul>
+                </ul>
+            )
+        }
+    }
+    
+    hideInventory = () => {
+        const menu = document.querySelector(".menu");
+        const inventory = document.querySelector(".inventory");
+        console.log(menu.classList);
+        const classes = menu.classList; 
+    }
+
+    render() {
+        return (
+            <div className="catch-of-the-day">
+                {!this.state.matches && <Navbar changeView={this.changeView} />}
+                <div className="menu">
+                    <Header tagline={this.props.match.params.storeId}/>
+                    {this.fishCheck()}
                 </div>
                 <Order 
+                    matches={this.state.matches}
                     fishes={this.state.fishes} 
                     order={this.state.order}
                     removeFromOrder={this.removeFromOrder}/>
                 <Inventory 
+                    matches={this.state.matches}
+                    changeView={this.changeView}
                     fishes={this.state.fishes} 
                     addFish={this.addFish} 
                     updateFish={this.updateFish} 
