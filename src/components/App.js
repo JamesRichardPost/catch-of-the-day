@@ -12,7 +12,8 @@ class App extends React.Component {
     state = {
         fishes: {},
         order: {},
-        matches: window.matchMedia("(min-width: 768px)").matches
+        matches: window.matchMedia("(min-width: 768px)").matches,
+        paused: true
     };
 
     static propTypes = {
@@ -36,6 +37,8 @@ class App extends React.Component {
             context: this,
             state: "fishes"
         });
+
+        this.setState({paused: false})
 
         if(!this.state.matches)
         {
@@ -168,7 +171,7 @@ class App extends React.Component {
             <div className="catch-of-the-day">
                 {!this.state.matches && <Navbar changeView={this.changeView} />}
                 <div className="menu">
-                    <Header tagline={this.props.match.params.storeId}/>
+                    <Header tagline={this.props.match.params.storeId} paused={this.state.paused}/>
                     {this.fishCheck()}
                 </div>
                 <Order 
@@ -177,7 +180,7 @@ class App extends React.Component {
                     order={this.state.order}
                     removeFromOrder={this.removeFromOrder}/>
                 <Inventory 
-                    matches={this.state.matches}
+                    paused={this.state.paused}
                     changeView={this.changeView}
                     fishes={this.state.fishes} 
                     addFish={this.addFish} 

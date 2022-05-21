@@ -80,8 +80,6 @@ export function getFunName() {
 
   const nouns = [
     "teeth",
-    "feet",
-    "people",
     "leaves",
     "mice",
     "geese",

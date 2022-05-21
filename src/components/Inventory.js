@@ -83,7 +83,7 @@ class Inventory extends React.Component {
         //const inventoryClass = this.props.matches ? 'inventory' : 'inventory hidden'; 
         console.log(inventoryClass);
         // check if the user is logged in alredy
-        if (!this.state.uid)
+        if (!this.state.uid && !this.props.paused)
         {
             return <Login classes={inventoryClass} authenticate={this.authenticate}></Login>;
         }

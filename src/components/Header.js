@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
     render() {
+        if (this.props.paused)
+        {
+            return null;
+        }
+
         return (
             <header className='top'>
                 <h1 class="mobileConcerns">
