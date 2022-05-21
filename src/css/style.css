@@ -74,10 +74,6 @@ audio:not([controls]) {
   display: none;
 }
 
-.hidden {
-  
-}
-
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -404,6 +400,12 @@ header.top h3:after {
   .hidden {
     display: none !important;
   }
+
+  .store-selector button {
+  width: 100%;
+  color: white;
+  background: gray;
+}
 
 }
 input#fold:not(:checked) ~ #main .catch-of-the-day > * {
