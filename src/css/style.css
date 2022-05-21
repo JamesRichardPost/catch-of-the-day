@@ -385,6 +385,10 @@ header.top h3:after {
     margin:0 0 0 0;
   }
 
+  .mobileConcerns {
+    width: 100vw;
+  }
+
   .menu { 
     flex-basis: 100%; 
   }

@@ -5,7 +5,7 @@ class Header extends React.Component {
     render() {
         return (
             <header className='top'>
-                <h1>
+                <h1 class="mobileConcerns">
                     Catch 
                     <span className='ofThe'>
                         <span className='of'>
