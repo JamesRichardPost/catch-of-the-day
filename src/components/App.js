@@ -7,7 +7,6 @@ import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
 import Navbar from './Navbar';
 import base from "../base";
-import { fixNav } from '../helpers';
 
 class App extends React.Component {
     state = {
@@ -128,7 +127,10 @@ class App extends React.Component {
             if (page !== input)
             {
                 const hidePart = document.querySelector("." + page);
-                hidePart.classList.add("hidden");
+                if (hidePart !== null)
+                {
+                    hidePart.classList.add("hidden");
+                }   
             }
         });
     }
