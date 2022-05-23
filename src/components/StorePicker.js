@@ -27,6 +27,8 @@ class StorePicker extends React.Component {
                     defaultValue={ getFunName() }
                     />
                 <button type="submit">Visit Store</button>
+                <p>This is an example React webpage for a pretend restaurant that includes a menu display, order system, and inventory management.</p>
+                <p>To create a new store or return to one you've made in the past, enter a name above.</p>
             </form>
         )
 
