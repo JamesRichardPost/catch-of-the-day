@@ -19,7 +19,14 @@ class EditFishForm extends React.Component {
     
     handleChange = e => {
         // update that fish
+        // we want to make sure we can't put non numbers in the price section
+        const target = e.target["name"];
 
+        if (target === "price")
+        {
+            e.currentTarget.value = e.currentTarget.value.replace(/\D/g,'');
+        }
+        
         // copy current fish
         const currentFish = { 
             ...this.props.fish,

@@ -2,6 +2,7 @@ import propTypes from 'prop-types';
 import react from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fishValidation } from '../helpers';
 
 class AddFishForm extends React.Component {
     nameRef = React.createRef();
@@ -14,19 +15,37 @@ class AddFishForm extends React.Component {
         addFish: PropTypes.func
     }
 
+    
     createFish = (e) => {
-        // stop form from submitting
+
         e.preventDefault();
+        let name = this.nameRef.current.value;
+        let price = this.priceRef.current.value;
+
+        // strip all non number characters
+        price = price.replace(/\D/g, "");
+
+        // need to validate the price and give things a name
+        if (name === "")
+        {
+            name = "New Fish";
+        }
+
+        if (price === "")
+        {
+            price = 0;
+        }
+
         const fish = {
-            name: this.nameRef.current.value,
-            price: parseFloat(this.priceRef.current.value),
+            name: name,
+            price: parseFloat(price),
             status: this.statusRef.current.value,
             desc: this.descRef.current.value,
             image: this.imageRef.current.value
         }
         
         this.props.addFish(fish);
-
+        
         // refresh form
         e.currentTarget.reset();
     }
@@ -35,7 +54,7 @@ class AddFishForm extends React.Component {
         return (
             <form className='fish-edit' onSubmit={this.createFish}>
                 <input name="name" type="text" placeholder="Name" ref={this.nameRef} />
-                <input name="price" type="text" placeholder='Price' ref={this.priceRef}/>
+                <input name="price" type="text" placeholder='Price' ref={this.priceRef} />
                 <select name="status" ref={this.statusRef}>
                     <option value="available">Fresh!</option>
                     <option value="unavailable">Sold Out!</option>
